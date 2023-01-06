@@ -10,7 +10,10 @@ using Employees.Application.Commands.MainDataCommand;
 using Employees.Application.Commands.ParameterCommand;
 using Employees.Application.Commands.ParameterDetailCommand;
 using Employees.Application.Commands.RemunerativeDataCommand;
+using Employees.Application.Commands.RemunerativePeriodicityCommand;
+using Employees.Application.Commands.SalaryPaymentCommand;
 using Employees.Application.Commands.UsersCommand;
+using Employees.Application.Commands.WorkingPeriodCommand;
 using MediatR;
 using System.Reflection;
 
@@ -81,6 +84,21 @@ namespace Employees.Api.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(CreateRemunerativeDataCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
             builder.RegisterAssemblyTypes(typeof(UpdateRemunerativeDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateRemunerativePeriodicityCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateRemunerativePeriodicityCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateSalaryPaymentCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateSalaryPaymentCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateWorkingPeriodCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateWorkingPeriodCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             builder.Register<ServiceFactory>(context => {

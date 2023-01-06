@@ -14,7 +14,10 @@ using Employees.Domain.Aggregates.MainDataAggregate;
 using Employees.Domain.Aggregates.ParameterAggregate;
 using Employees.Domain.Aggregates.ParameterDetailAggregate;
 using Employees.Domain.Aggregates.RemunerativeDataAggregate;
+using Employees.Domain.Aggregates.RemunerativePeriodicityAggregate;
+using Employees.Domain.Aggregates.SalaryPaymentAggregate;
 using Employees.Domain.Aggregates.UsersAggregate;
+using Employees.Domain.Aggregates.WorkingPeriodAggregate;
 using Employees.Repository.Repositories;
 
 namespace Employees.Api.Infrastructure.AutofacModules
@@ -93,6 +96,18 @@ namespace Employees.Api.Infrastructure.AutofacModules
                            .As<IRemunerativeDataMapper>()
                            .InstancePerLifetimeScope();
 
+            builder.Register(c => new RemunerativePeriodicityMapper())
+                           .As<IRemunerativePeriodicityMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new SalaryPaymentMapper())
+                           .As<ISalaryPaymentMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new WorkingPeriodMapper())
+                           .As<IWorkingPeriodMapper>()
+                           .InstancePerLifetimeScope();
+
             #endregion
 
             #region Query
@@ -143,6 +158,18 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.RegisterType<RemunerativeDataQuery>()
                            .As<IRemunerativeDataQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<RemunerativePeriodicityQuery>()
+                           .As<IRemunerativePeriodicityQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<SalaryPaymentQuery>()
+                           .As<ISalaryPaymentQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<WorkingPeriodQuery>()
+                           .As<IWorkingPeriodQuery>()
                            .InstancePerLifetimeScope();
 
             #endregion
@@ -200,6 +227,18 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.Register(c => new RemunerativeDataRepository(_defaultConnection))
                .As<IRemunerativeDataRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new RemunerativePeriodicityRepository(_defaultConnection))
+               .As<IRemunerativePeriodicityRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new SalaryPaymentRepository(_defaultConnection))
+               .As<ISalaryPaymentRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new WorkingPeriodRepository(_defaultConnection))
+               .As<IWorkingPeriodRepository>()
                .InstancePerLifetimeScope();
 
             #endregion
