@@ -5,6 +5,8 @@ using Employees.Application.Queries.Interfaces;
 using Employees.Application.Queries.Mappers;
 using Employees.Domain.Aggregates.CompanyAggregate;
 using Employees.Domain.Aggregates.CompanyUsersAggregate;
+using Employees.Domain.Aggregates.EmployeeAggregate;
+using Employees.Domain.Aggregates.MainDataAggregate;
 using Employees.Domain.Aggregates.ParameterAggregate;
 using Employees.Domain.Aggregates.ParameterDetailAggregate;
 using Employees.Domain.Aggregates.UsersAggregate;
@@ -58,6 +60,14 @@ namespace Employees.Api.Infrastructure.AutofacModules
                            .As<IParameterDetailMapper>()
                            .InstancePerLifetimeScope();
 
+            builder.Register(c => new EmployeeMapper())
+                           .As<IEmployeeMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new MainDataMapper())
+                           .As<IMainDataMapper>()
+                           .InstancePerLifetimeScope();
+
             #endregion
 
             #region Query
@@ -80,6 +90,14 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.RegisterType<ParameterDetailQuery>()
                            .As<IParameterDetailQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<EmployeeQuery>()
+                           .As<IEmployeeQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<MainDataQuery>()
+                           .As<IMainDataQuery>()
                            .InstancePerLifetimeScope();
 
             #endregion
@@ -109,6 +127,14 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.Register(c => new ParameterDetailRepository(_defaultConnection))
                .As<IParameterDetailRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new EmployeeRepository(_defaultConnection))
+               .As<IEmployeeRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new MainDataRepository(_defaultConnection))
+               .As<IMainDataRepository>()
                .InstancePerLifetimeScope();
 
             #endregion

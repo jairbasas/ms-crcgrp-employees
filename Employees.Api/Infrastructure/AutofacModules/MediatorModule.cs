@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Employees.Application.Commands.CompanyCommand;
 using Employees.Application.Commands.CompanyUsersCommand;
+using Employees.Application.Commands.EmployeeCommand;
+using Employees.Application.Commands.MainDataCommand;
 using Employees.Application.Commands.ParameterCommand;
 using Employees.Application.Commands.ParameterDetailCommand;
 using Employees.Application.Commands.UsersCommand;
@@ -39,6 +41,16 @@ namespace Employees.Api.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(CreateParameterDetailCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
             builder.RegisterAssemblyTypes(typeof(UpdateParameterDetailCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateEmployeeCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateEmployeeCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateMainDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateMainDataCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             builder.Register<ServiceFactory>(context => {
