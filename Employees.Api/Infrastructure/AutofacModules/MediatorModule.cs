@@ -1,10 +1,15 @@
 ﻿using Autofac;
 using Employees.Application.Commands.CompanyCommand;
 using Employees.Application.Commands.CompanyUsersCommand;
+using Employees.Application.Commands.CompensationPaymentCommand;
+using Employees.Application.Commands.ContractCommand;
 using Employees.Application.Commands.EmployeeCommand;
+using Employees.Application.Commands.IncomeDiscountCommand;
+using Employees.Application.Commands.LaborDataCommand;
 using Employees.Application.Commands.MainDataCommand;
 using Employees.Application.Commands.ParameterCommand;
 using Employees.Application.Commands.ParameterDetailCommand;
+using Employees.Application.Commands.RemunerativeDataCommand;
 using Employees.Application.Commands.UsersCommand;
 using MediatR;
 using System.Reflection;
@@ -51,6 +56,31 @@ namespace Employees.Api.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(CreateMainDataCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
             builder.RegisterAssemblyTypes(typeof(UpdateMainDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateCompensationPaymentCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateCompensationPaymentCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateContractCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateContractCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateIncomeDiscountCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateIncomeDiscountCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateLaborDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateLaborDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateRemunerativeDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateRemunerativeDataCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             builder.Register<ServiceFactory>(context => {

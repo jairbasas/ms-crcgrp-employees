@@ -5,10 +5,15 @@ using Employees.Application.Queries.Interfaces;
 using Employees.Application.Queries.Mappers;
 using Employees.Domain.Aggregates.CompanyAggregate;
 using Employees.Domain.Aggregates.CompanyUsersAggregate;
+using Employees.Domain.Aggregates.CompensationPaymentAggregate;
+using Employees.Domain.Aggregates.ContractAggregate;
 using Employees.Domain.Aggregates.EmployeeAggregate;
+using Employees.Domain.Aggregates.IncomeDiscountAggregate;
+using Employees.Domain.Aggregates.LaborDataAggregate;
 using Employees.Domain.Aggregates.MainDataAggregate;
 using Employees.Domain.Aggregates.ParameterAggregate;
 using Employees.Domain.Aggregates.ParameterDetailAggregate;
+using Employees.Domain.Aggregates.RemunerativeDataAggregate;
 using Employees.Domain.Aggregates.UsersAggregate;
 using Employees.Repository.Repositories;
 
@@ -68,6 +73,26 @@ namespace Employees.Api.Infrastructure.AutofacModules
                            .As<IMainDataMapper>()
                            .InstancePerLifetimeScope();
 
+            builder.Register(c => new CompensationPaymentMapper())
+                           .As<ICompensationPaymentMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new ContractMapper())
+                           .As<IContractMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new IncomeDiscountMapper())
+                           .As<IIncomeDiscountMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new LaborDataMapper())
+                           .As<ILaborDataMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new RemunerativeDataMapper())
+                           .As<IRemunerativeDataMapper>()
+                           .InstancePerLifetimeScope();
+
             #endregion
 
             #region Query
@@ -98,6 +123,26 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.RegisterType<MainDataQuery>()
                            .As<IMainDataQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<CompensationPaymentQuery>()
+                           .As<ICompensationPaymentQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<ContractQuery>()
+                           .As<IContractQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<IncomeDiscountQuery>()
+                           .As<IIncomeDiscountQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<LaborDataQuery>()
+                           .As<ILaborDataQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<RemunerativeDataQuery>()
+                           .As<IRemunerativeDataQuery>()
                            .InstancePerLifetimeScope();
 
             #endregion
@@ -135,6 +180,26 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.Register(c => new MainDataRepository(_defaultConnection))
                .As<IMainDataRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new CompensationPaymentRepository(_defaultConnection))
+               .As<ICompensationPaymentRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new ContractRepository(_defaultConnection))
+               .As<IContractRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new IncomeDiscountRepository(_defaultConnection))
+               .As<IIncomeDiscountRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new LaborDataRepository(_defaultConnection))
+               .As<ILaborDataRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new RemunerativeDataRepository(_defaultConnection))
+               .As<IRemunerativeDataRepository>()
                .InstancePerLifetimeScope();
 
             #endregion
