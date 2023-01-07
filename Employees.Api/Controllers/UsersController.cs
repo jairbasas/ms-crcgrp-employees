@@ -7,6 +7,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Employees.Api.Utility;
+using Microsoft.Net.Http.Headers;
 
 namespace Employees.Api.Controllers
 {
@@ -43,6 +45,7 @@ namespace Employees.Api.Controllers
         [ProducesResponseType(typeof(Response<IEnumerable<UsersViewModel>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetBySearch([FromQuery] UsersRequest request)
         {
+            request.companyId = Tools.GetCompanyToken(Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", ""));
             var result = await _iUsersQuery.GetBySearch(request);
 
             return Ok(result);
