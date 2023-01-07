@@ -1,4 +1,5 @@
-﻿using Employees.Domain.Core;
+﻿using Employees.Domain.Aggregates.UsersAggregate;
+using Employees.Domain.Core;
 
 namespace Employees.Domain.Aggregates.CompanyUsersAggregate
 {
@@ -7,13 +8,14 @@ namespace Employees.Domain.Aggregates.CompanyUsersAggregate
         public int companyUserId { get; set; }
         public int? userId { get; set; }
         public int? companyId { get; set; }
+        public int? state { get; set; }
         public int? registerUserId { get; set; }
         public string registerUserFullname { get; set; }
         public DateTime? registerDatetime { get; set; }
         public int? updateUserId { get; set; }
         public string updateUserFullname { get; set; }
         public DateTime? updateDatetime { get; set; }
-        public int? state { get; set; }
+        public Users users { get; set; }
 
         public CompanyUsers()
         {

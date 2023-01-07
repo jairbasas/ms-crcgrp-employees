@@ -11,7 +11,7 @@ using System.Net;
 namespace Employees.Api.Controllers
 {
     [Authorize]
-    [Route("parameter-details")]
+    [Route("employees/parameter-details")]
     [ApiController]
     public class ParameterDetailController : ControllerBase
     {

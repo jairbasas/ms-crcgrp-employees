@@ -11,7 +11,7 @@ using System.Net;
 namespace Employees.Api.Controllers
 {
     [Authorize]
-    [Route("main-data")]
+    [Route("employees/main-data")]
     [ApiController]
     public class MainDataController : ControllerBase
     {

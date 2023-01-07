@@ -15,7 +15,7 @@ namespace Employees.Repository.Repositories
             _connectionString = connectionString;
         }
 
-        public async Task<int> Register(CompanyUsers users)
+        public async Task<int> Register(CompanyUsers companyUsers)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -24,23 +24,13 @@ namespace Employees.Repository.Repositories
                 try
                 {
                     var parameters = new DynamicParameters();
-
-                    parameters.Add("@poi_company_user_id", users.companyUserId, DbType.Int32, ParameterDirection.InputOutput);
-                    parameters.Add("@pii_user_id", users.userId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@pii_company_id", users.companyId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@pii_register_user_id", users.registerUserId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@piv_register_user_fullname", users.registerUserFullname, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_register_datetime", users.registerDatetime, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@pii_update_user_id", users.updateUserId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@piv_update_user_fullname", users.updateUserFullname, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_update_datetime", users.updateDatetime, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@pii_state", users.state, DbType.Int32, ParameterDirection.Input);
+                    parameters = GetParatamers(companyUsers);
 
                     var result = await connection.ExecuteAsync(@"TRANSVERSAL.COMPANY_USERS_insert_update", parameters, commandType: CommandType.StoredProcedure);
 
-                    users.companyUserId = parameters.Get<int>("@poi_company_user_id");
+                    companyUsers.companyUserId = parameters.Get<int>("@poi_company_user_id");
 
-                    return users.companyUserId;
+                    return companyUsers.companyUserId;
                 }
                 catch (Exception ex)
                 {
@@ -48,5 +38,58 @@ namespace Employees.Repository.Repositories
                 }
             }
         }
+
+        public async Task<int> RegisterAsync(CompanyUsers companyUsers)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        await new UsersRepository(_connectionString).RegisterAsync(companyUsers.users, connection, transaction);
+
+                        var parameters = new DynamicParameters();
+                        parameters = GetParatamers(companyUsers);
+
+                        var result = await connection.ExecuteAsync(@"TRANSVERSAL.COMPANY_USERS_insert_update", parameters, transaction, commandType: CommandType.StoredProcedure);
+
+                        companyUsers.companyUserId = parameters.Get<int>("@poi_company_user_id");
+
+                        transaction.Commit();
+                        return companyUsers.companyUserId;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new EmployeesBaseException(ex.Message);
+                    }
+                }
+            }
+        }
+
+        #region
+
+        private DynamicParameters GetParatamers(CompanyUsers companyUsers) 
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@poi_company_user_id", companyUsers.companyUserId, DbType.Int32, ParameterDirection.InputOutput);
+            parameters.Add("@pii_user_id", companyUsers.userId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@pii_company_id", companyUsers.companyId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@pii_register_user_id", companyUsers.registerUserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_register_user_fullname", companyUsers.registerUserFullname, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_register_datetime", companyUsers.registerDatetime, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("@pii_update_user_id", companyUsers.updateUserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_update_user_fullname", companyUsers.updateUserFullname, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_update_datetime", companyUsers.updateDatetime, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("@pii_state", companyUsers.state, DbType.Int32, ParameterDirection.Input);
+
+            return parameters;
+        }
+
+        #endregion
+
     }
 }

@@ -11,7 +11,7 @@ using System.Net;
 namespace Employees.Api.Controllers
 {
     [Authorize]
-    [Route("income-discounts")]
+    [Route("employees/income-discounts")]
     [ApiController]
     public class IncomeDiscountController : ControllerBase
     {

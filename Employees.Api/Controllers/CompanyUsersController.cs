@@ -10,8 +10,8 @@ using System.Net;
 
 namespace Employees.Api.Controllers
 {
-    [Authorize]
-    [Route("company-users")]
+    //[Authorize]
+    [Route("employees/company-users")]
     [ApiController]
     public class CompanyUsersController : ControllerBase
     {
@@ -24,6 +24,7 @@ namespace Employees.Api.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
+        [Authorize]
         [HttpGet]
         [Route("{companyUserId}")]
         [ProducesResponseType(typeof(Response<CompanyUsersViewModel>), (int)HttpStatusCode.OK)]
@@ -48,6 +49,7 @@ namespace Employees.Api.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("find-all")]
         [ProducesResponseType(typeof(Response<PaginationViewModel<CompanyUsersViewModel>>), (int)HttpStatusCode.OK)]
@@ -58,6 +60,7 @@ namespace Employees.Api.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -68,6 +71,7 @@ namespace Employees.Api.Controllers
             return CreatedAtAction(nameof(CreateCompanyUsers), result);
         }
 
+        [Authorize]
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

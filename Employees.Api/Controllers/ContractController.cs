@@ -11,7 +11,7 @@ using System.Net;
 namespace Employees.Api.Controllers
 {
     [Authorize]
-    [Route("contracts")]
+    [Route("employees/contracts")]
     [ApiController]
     public class ContractController : ControllerBase
     {

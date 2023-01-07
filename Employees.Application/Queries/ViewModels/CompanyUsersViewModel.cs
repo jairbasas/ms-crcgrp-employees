@@ -18,6 +18,8 @@ namespace Employees.Application.Queries.ViewModels
 
     public class CompanyUsersRequest : PaginationRequest
     {
-        public int companyUserId { get; set; }
+        public int? companyUserId { get; set; }
+        public int? userId { get; set; }
+        public int? companyId { get; set; }
     }
 }

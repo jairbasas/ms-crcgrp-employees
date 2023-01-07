@@ -11,7 +11,7 @@ using System.Net;
 namespace Employees.Api.Controllers
 {
     [Authorize]
-    [Route("working-periods")]
+    [Route("employees/working-periods")]
     [ApiController]
     public class WorkingPeriodController : ControllerBase
     {
