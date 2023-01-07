@@ -8,14 +8,19 @@ using Employees.Domain.Aggregates.CompanyUsersAggregate;
 using Employees.Domain.Aggregates.CompensationPaymentAggregate;
 using Employees.Domain.Aggregates.ContractAggregate;
 using Employees.Domain.Aggregates.EmployeeAggregate;
+using Employees.Domain.Aggregates.HealthBenefitsAggregate;
 using Employees.Domain.Aggregates.IncomeDiscountAggregate;
 using Employees.Domain.Aggregates.LaborDataAggregate;
+using Employees.Domain.Aggregates.LaborTaxDataAggregate;
 using Employees.Domain.Aggregates.MainDataAggregate;
 using Employees.Domain.Aggregates.ParameterAggregate;
 using Employees.Domain.Aggregates.ParameterDetailAggregate;
 using Employees.Domain.Aggregates.RemunerativeDataAggregate;
 using Employees.Domain.Aggregates.RemunerativePeriodicityAggregate;
 using Employees.Domain.Aggregates.SalaryPaymentAggregate;
+using Employees.Domain.Aggregates.SctrAggregate;
+using Employees.Domain.Aggregates.SunatDataAggregate;
+using Employees.Domain.Aggregates.SunatRemunerationDataAggregate;
 using Employees.Domain.Aggregates.UsersAggregate;
 using Employees.Domain.Aggregates.WorkingPeriodAggregate;
 using Employees.Repository.Repositories;
@@ -108,6 +113,26 @@ namespace Employees.Api.Infrastructure.AutofacModules
                            .As<IWorkingPeriodMapper>()
                            .InstancePerLifetimeScope();
 
+            builder.Register(c => new HealthBenefitsMapper())
+                           .As<IHealthBenefitsMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new LaborTaxDataMapper())
+                           .As<ILaborTaxDataMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new SctrMapper())
+                           .As<ISctrMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new SunatDataMapper())
+                           .As<ISunatDataMapper>()
+                           .InstancePerLifetimeScope();
+
+            builder.Register(c => new SunatRemunerationDataMapper())
+                           .As<ISunatRemunerationDataMapper>()
+                           .InstancePerLifetimeScope();
+
             #endregion
 
             #region Query
@@ -170,6 +195,26 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.RegisterType<WorkingPeriodQuery>()
                            .As<IWorkingPeriodQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<HealthBenefitsQuery>()
+                           .As<IHealthBenefitsQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<LaborTaxDataQuery>()
+                           .As<ILaborTaxDataQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<SctrQuery>()
+                           .As<ISctrQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<SunatDataQuery>()
+                           .As<ISunatDataQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<SunatRemunerationDataQuery>()
+                           .As<ISunatRemunerationDataQuery>()
                            .InstancePerLifetimeScope();
 
             #endregion
@@ -239,6 +284,26 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.Register(c => new WorkingPeriodRepository(_defaultConnection))
                .As<IWorkingPeriodRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new HealthBenefitsRepository(_defaultConnection))
+               .As<IHealthBenefitsRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new LaborTaxDataRepository(_defaultConnection))
+               .As<ILaborTaxDataRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new SctrRepository(_defaultConnection))
+               .As<ISctrRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new SunatDataRepository(_defaultConnection))
+               .As<ISunatDataRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new SunatRemunerationDataRepository(_defaultConnection))
+               .As<ISunatRemunerationDataRepository>()
                .InstancePerLifetimeScope();
 
             #endregion

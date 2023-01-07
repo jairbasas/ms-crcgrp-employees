@@ -4,14 +4,19 @@ using Employees.Application.Commands.CompanyUsersCommand;
 using Employees.Application.Commands.CompensationPaymentCommand;
 using Employees.Application.Commands.ContractCommand;
 using Employees.Application.Commands.EmployeeCommand;
+using Employees.Application.Commands.HealthBenefitsCommand;
 using Employees.Application.Commands.IncomeDiscountCommand;
 using Employees.Application.Commands.LaborDataCommand;
+using Employees.Application.Commands.LaborTaxDataCommand;
 using Employees.Application.Commands.MainDataCommand;
 using Employees.Application.Commands.ParameterCommand;
 using Employees.Application.Commands.ParameterDetailCommand;
 using Employees.Application.Commands.RemunerativeDataCommand;
 using Employees.Application.Commands.RemunerativePeriodicityCommand;
 using Employees.Application.Commands.SalaryPaymentCommand;
+using Employees.Application.Commands.SctrCommand;
+using Employees.Application.Commands.SunatDataCommand;
+using Employees.Application.Commands.SunatRemunerationDataCommand;
 using Employees.Application.Commands.UsersCommand;
 using Employees.Application.Commands.WorkingPeriodCommand;
 using MediatR;
@@ -99,6 +104,31 @@ namespace Employees.Api.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(CreateWorkingPeriodCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
             builder.RegisterAssemblyTypes(typeof(UpdateWorkingPeriodCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateHealthBenefitsCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateHealthBenefitsCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateLaborTaxDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateLaborTaxDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateSctrCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateSctrCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateSunatDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateSunatDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateSunatRemunerationDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateSunatRemunerationDataCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             builder.Register<ServiceFactory>(context => {
