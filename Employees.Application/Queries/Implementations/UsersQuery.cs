@@ -37,7 +37,7 @@ namespace Employees.Application.Queries.Implementations
             var parameters = new Dictionary<string, object>
             {
                 {"user_id", request.userId ?? 0},
-                {"company_id", request.companyId}
+                {"company_id", request.companyId ?? 0}
             };
 
             var result = await _iGenericQuery.Search(@"TRANSVERSAL.USERS_search", ConvertTo.Xml(parameters), request.pagination);
@@ -52,7 +52,7 @@ namespace Employees.Application.Queries.Implementations
             var parameters = new Dictionary<string, object>
             {
                 {"user_id", request.userId ?? 0},
-                {"company_id", request.companyId}
+                {"company_id", request.companyId ?? 0}
             };
 
             var result = await _iGenericQuery.FindAll(@"TRANSVERSAL.USERS_find_all", ConvertTo.Xml(parameters), request.pagination);
