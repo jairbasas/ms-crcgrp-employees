@@ -30,7 +30,7 @@ namespace Employees.Application.Commands.ContractCommand
 
         public async Task<Response<int>> Handle(UpdateContractCommand request, CancellationToken cancellationToken)
         {
-            Contract contract = new Contract(request.employeeId, request.startDate, request.endDate, request.contractTypeId, request.updateUserId, request.updateUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()), request.updateUserId, request.updateUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()));
+            Contracts contract = new Contracts(request.employeeId, request.startDate, request.endDate, request.contractTypeId, request.updateUserId, request.updateUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()), request.updateUserId, request.updateUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()));
 
             var result = await _iContractRepository.Register(contract);
 

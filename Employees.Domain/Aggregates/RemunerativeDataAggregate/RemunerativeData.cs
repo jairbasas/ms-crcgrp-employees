@@ -1,4 +1,8 @@
-﻿using Employees.Domain.Core;
+﻿using Employees.Domain.Aggregates.CompensationPaymentAggregate;
+using Employees.Domain.Aggregates.IncomeDiscountAggregate;
+using Employees.Domain.Aggregates.RemunerativePeriodicityAggregate;
+using Employees.Domain.Aggregates.SalaryPaymentAggregate;
+using Employees.Domain.Core;
 
 namespace Employees.Domain.Aggregates.RemunerativeDataAggregate
 {
@@ -12,6 +16,10 @@ namespace Employees.Domain.Aggregates.RemunerativeDataAggregate
         public int? updateUserId { get; set; }
         public string updateUserFullname { get; set; }
         public DateTime? updateDatetime { get; set; }
+        public IEnumerable<IncomeDiscount> incomeDiscount { get; set; }
+        public RemunerativePeriodicity remunerativePeriodicity { get; set; }
+        public SalaryPayment salaryPayment { get; set; }
+        public CompensationPayment compensationPayment { get; set; }
 
         public RemunerativeData()
         {

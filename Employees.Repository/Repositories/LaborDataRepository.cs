@@ -25,7 +25,7 @@ namespace Employees.Repository.Repositories
                 {
                     var parameters = new DynamicParameters();
 
-                    parameters.Add("@poi_employee_id", laborData.employeeId, DbType.Int32, ParameterDirection.InputOutput);
+                    parameters.Add("@poi_employee_id", laborData.employeeId, DbType.Int32, ParameterDirection.Input);
                     parameters.Add("@pid_salary_advance", laborData.salaryAdvance, DbType.Decimal, ParameterDirection.Input);
                     parameters.Add("@piv_reference", laborData.reference, DbType.String, ParameterDirection.Input);
                     parameters.Add("@pid_test_end_date", laborData.testEndDate, DbType.DateTime, ParameterDirection.Input);

@@ -2,7 +2,7 @@
 
 namespace Employees.Domain.Aggregates.ContractAggregate
 {
-    public class Contract : Audit
+    public class Contracts : Audit
     {
         public int employeeId { get; set; }
         public DateTime? startDate { get; set; }
@@ -15,11 +15,11 @@ namespace Employees.Domain.Aggregates.ContractAggregate
         public string updateUserFullname { get; set; }
         public DateTime? updateDatetime { get; set; }
 
-        public Contract()
+        public Contracts()
         {
         }
 
-        public Contract(int employeeId, DateTime? startDate, DateTime? endDate, string contractTypeId, int? registerUserId, string registerUserFullname, DateTime? registerDatetime, int? updateUserId, string updateUserFullname, DateTime? updateDatetime)
+        public Contracts(int employeeId, DateTime? startDate, DateTime? endDate, string contractTypeId, int? registerUserId, string registerUserFullname, DateTime? registerDatetime, int? updateUserId, string updateUserFullname, DateTime? updateDatetime)
         {
             this.employeeId = employeeId;
             this.startDate = startDate;

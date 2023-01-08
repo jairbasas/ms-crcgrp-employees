@@ -1,7 +1,11 @@
-﻿using Employees.Application.Queries.Generics;
+﻿using Employees.Application.Commands.ContractCommand;
+using Employees.Application.Commands.WorkingPeriodCommand;
+using Employees.Application.Queries.Generics;
 using Employees.Application.Utility;
 using Employees.Application.Wrappers;
+using Employees.Domain.Aggregates.ContractAggregate;
 using Employees.Domain.Aggregates.MainDataAggregate;
+using Employees.Domain.Aggregates.WorkingPeriodAggregate;
 using MediatR;
 
 namespace Employees.Application.Commands.MainDataCommand
@@ -37,6 +41,8 @@ namespace Employees.Application.Commands.MainDataCommand
         public string observation { get; set; }
         public int? registerUserId { get; set; }
         public string registerUserFullname { get; set; }
+        public CreateContractCommand contract { get; set; }
+        public CreateWorkingPeriodCommand workingPeriod { get; set; }
     }
 
     public class CreateMainDataCommandHandler : IRequestHandler<CreateMainDataCommand, Response<int>>
@@ -54,7 +60,19 @@ namespace Employees.Application.Commands.MainDataCommand
         {
             MainData mainData = new MainData(request.employeeId, request.documentNumber, request.birthDate, request.ubigeoBirth, request.postalCode, request.phoneNumber, request.email, request.domiciled, request.routeTypeNumber, request.department, request.inside, request.mz, request.routeName, request.lt, request.km, request.block, request.zoneName, request.stage, request.reference, request.ubigeo, request.documentTypeId, request.nationalityId, request.sexId, request.civilStatus, request.routeTypeId, request.zoneTypeId, request.observation, request.registerUserId, request.registerUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()), request.registerUserId, request.registerUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()));
 
-            var result = await _iMainDataRepository.Register(mainData);
+            if (request.contract != null)
+            {
+                Contracts contracts = new Contracts(request.employeeId, request.contract.startDate, request.contract.endDate, request.contract.contractTypeId, request.registerUserId, request.registerUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()), request.registerUserId, request.registerUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()));
+                mainData.contracts = contracts;
+            }
+
+            if (request.workingPeriod != null)
+            {
+                WorkingPeriod workingPeriod = new WorkingPeriod(request.employeeId, request.workingPeriod.dateAdmission, request.workingPeriod.hourDay, request.workingPeriod.shiftId, request.workingPeriod.tareoDiario, request.workingPeriod.extraHourTareo, request.workingPeriod.tareoGroupId, request.workingPeriod.terminationDate, request.workingPeriod.reasonTerminationId, request.registerUserId, request.registerUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()), request.registerUserId, request.registerUserFullname, DateTime.Now.Peru(_iValuesSettings.GetTimeZone()));
+                mainData.workingPeriod = workingPeriod;
+            }
+
+            var result = await _iMainDataRepository.RegisterAsync(mainData);
 
             return new Response<int>(result);
         }

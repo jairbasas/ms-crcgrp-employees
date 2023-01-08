@@ -25,19 +25,7 @@ namespace Employees.Repository.Repositories
                 {
                     var parameters = new DynamicParameters();
 
-                    parameters.Add("@poi_employee_id", salaryPayment.employeeId, DbType.Int32, ParameterDirection.InputOutput);
-                    parameters.Add("@piv_account_number", salaryPayment.accountNumber, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@piv_interbank_account", salaryPayment.interbankAccount, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@piv_bank_id", salaryPayment.bankId, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@piv_account_type_id", salaryPayment.accountTypeId, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@piv_currency_id", salaryPayment.currencyId, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pii_register_user_id", salaryPayment.registerUserId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@piv_register_user_fullname", salaryPayment.registerUserFullname, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_register_datetime", salaryPayment.registerDatetime, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@pii_update_user_id", salaryPayment.updateUserId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@piv_update_user_fullname", salaryPayment.updateUserFullname, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_update_datetime", salaryPayment.updateDatetime, DbType.DateTime, ParameterDirection.Input);
-
+                    parameters = GetParameters(salaryPayment);
                     var result = await connection.ExecuteAsync(@"EMPLOYEES.SALARY_PAYMENT_insert_update", parameters, commandType: CommandType.StoredProcedure);
 
                     salaryPayment.employeeId = parameters.Get<int>("@poi_employee_id");
@@ -50,5 +38,38 @@ namespace Employees.Repository.Repositories
                 }
             }
         }
+
+        public async Task<int> RegisterAsync(SalaryPayment salaryPayment, SqlConnection connection, SqlTransaction transaction) 
+        {
+            var parameters = new DynamicParameters();
+
+            parameters = GetParameters(salaryPayment);
+            return await connection.ExecuteAsync(@"EMPLOYEES.SALARY_PAYMENT_insert_update", parameters, transaction, commandType: CommandType.StoredProcedure);
+        }
+
+        #region Methods
+
+        private DynamicParameters GetParameters(SalaryPayment salaryPayment) 
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@poi_employee_id", salaryPayment.employeeId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_account_number", salaryPayment.accountNumber, DbType.String, ParameterDirection.Input);
+            parameters.Add("@piv_interbank_account", salaryPayment.interbankAccount, DbType.String, ParameterDirection.Input);
+            parameters.Add("@piv_bank_id", salaryPayment.bankId, DbType.String, ParameterDirection.Input);
+            parameters.Add("@piv_account_type_id", salaryPayment.accountTypeId, DbType.String, ParameterDirection.Input);
+            parameters.Add("@piv_currency_id", salaryPayment.currencyId, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pii_register_user_id", salaryPayment.registerUserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_register_user_fullname", salaryPayment.registerUserFullname, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_register_datetime", salaryPayment.registerDatetime, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("@pii_update_user_id", salaryPayment.updateUserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_update_user_fullname", salaryPayment.updateUserFullname, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_update_datetime", salaryPayment.updateDatetime, DbType.DateTime, ParameterDirection.Input);
+
+            return parameters;
+        }
+
+        #endregion
+
     }
 }

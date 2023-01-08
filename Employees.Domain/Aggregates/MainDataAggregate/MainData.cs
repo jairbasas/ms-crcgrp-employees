@@ -1,4 +1,6 @@
-﻿using Employees.Domain.Core;
+﻿using Employees.Domain.Aggregates.ContractAggregate;
+using Employees.Domain.Aggregates.WorkingPeriodAggregate;
+using Employees.Domain.Core;
 
 namespace Employees.Domain.Aggregates.MainDataAggregate
 {
@@ -37,6 +39,8 @@ namespace Employees.Domain.Aggregates.MainDataAggregate
         public int? updateUserId { get; set; }
         public string updateUserFullname { get; set; }
         public DateTime? updateDatetime { get; set; }
+        public Contracts contracts { get; set; }
+        public WorkingPeriod workingPeriod { get; set; }
 
         public MainData()
         {
