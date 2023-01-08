@@ -25,19 +25,7 @@ namespace Employees.Repository.Repositories
                 {
                     var parameters = new DynamicParameters();
 
-                    parameters.Add("@poi_employee_id", healthBenefits.employeeId, DbType.Int32, ParameterDirection.InputOutput);
-                    parameters.Add("@pib_affiliate_eps", healthBenefits.affiliateEps, DbType.Boolean, ParameterDirection.Input);
-                    parameters.Add("@piv_eps_number", healthBenefits.epsNumber, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_registration_date", healthBenefits.registrationDate, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@piv_family_plan", healthBenefits.familyPlan, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_disenrollment_date", healthBenefits.disenrollmentDate, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@pii_register_user_id", healthBenefits.registerUserId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@piv_register_user_fullname", healthBenefits.registerUserFullname, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_register_datetime", healthBenefits.registerDatetime, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@pii_update_user_id", healthBenefits.updateUserId, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("@piv_update_user_fullname", healthBenefits.updateUserFullname, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@pid_update_datetime", healthBenefits.updateDatetime, DbType.DateTime, ParameterDirection.Input);
-
+                    parameters = GetParameters(healthBenefits);
                     var result = await connection.ExecuteAsync(@"EMPLOYEES.HEALTH_BENEFITS_insert_update", parameters, commandType: CommandType.StoredProcedure);
 
                     healthBenefits.employeeId = parameters.Get<int>("@poi_employee_id");
@@ -50,5 +38,36 @@ namespace Employees.Repository.Repositories
                 }
             }
         }
+
+        public async Task<int> RegisterAsync(HealthBenefits healthBenefits, SqlConnection connection, SqlTransaction transaction) 
+        {
+            var parameters = new DynamicParameters();
+
+            parameters = GetParameters(healthBenefits);
+            return await connection.ExecuteAsync(@"EMPLOYEES.HEALTH_BENEFITS_insert_update", parameters, transaction, commandType: CommandType.StoredProcedure);
+        }
+
+        #region Methods
+        private DynamicParameters GetParameters(HealthBenefits healthBenefits) 
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@poi_employee_id", healthBenefits.employeeId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@pib_affiliate_eps", healthBenefits.affiliateEps, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("@piv_eps_number", healthBenefits.epsNumber, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_registration_date", healthBenefits.registrationDate, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("@piv_family_plan", healthBenefits.familyPlan, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_disenrollment_date", healthBenefits.disenrollmentDate, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("@pii_register_user_id", healthBenefits.registerUserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_register_user_fullname", healthBenefits.registerUserFullname, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_register_datetime", healthBenefits.registerDatetime, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("@pii_update_user_id", healthBenefits.updateUserId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@piv_update_user_fullname", healthBenefits.updateUserFullname, DbType.String, ParameterDirection.Input);
+            parameters.Add("@pid_update_datetime", healthBenefits.updateDatetime, DbType.DateTime, ParameterDirection.Input);
+
+            return parameters;
+        }
+        #endregion
+
     }
 }

@@ -1,4 +1,8 @@
-﻿using Employees.Domain.Core;
+﻿using Employees.Domain.Aggregates.HealthBenefitsAggregate;
+using Employees.Domain.Aggregates.LaborTaxDataAggregate;
+using Employees.Domain.Aggregates.SctrAggregate;
+using Employees.Domain.Aggregates.SunatRemunerationDataAggregate;
+using Employees.Domain.Core;
 
 namespace Employees.Domain.Aggregates.SunatDataAggregate
 {
@@ -21,6 +25,10 @@ namespace Employees.Domain.Aggregates.SunatDataAggregate
         public int? updateUserId { get; set; }
         public string updateUserFullname { get; set; }
         public DateTime? updateDatetime { get; set; }
+        public IEnumerable<LaborTaxData> laborTaxData { get; set; }
+        public IEnumerable<SunatRemunerationData> sunatRemunerationData { get; set; }
+        public IEnumerable<Sctr> sctr { get; set; }
+        public HealthBenefits healthBenefits { get; set; }
 
         public SunatData()
         {

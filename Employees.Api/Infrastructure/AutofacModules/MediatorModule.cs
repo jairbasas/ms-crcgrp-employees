@@ -4,6 +4,7 @@ using Employees.Application.Commands.CompanyUsersCommand;
 using Employees.Application.Commands.CompensationPaymentCommand;
 using Employees.Application.Commands.ContractCommand;
 using Employees.Application.Commands.EmployeeCommand;
+using Employees.Application.Commands.EmployeeCompanyCommand;
 using Employees.Application.Commands.HealthBenefitsCommand;
 using Employees.Application.Commands.IncomeDiscountCommand;
 using Employees.Application.Commands.LaborDataCommand;
@@ -129,6 +130,11 @@ namespace Employees.Api.Infrastructure.AutofacModules
             builder.RegisterAssemblyTypes(typeof(CreateSunatRemunerationDataCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
             builder.RegisterAssemblyTypes(typeof(UpdateSunatRemunerationDataCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.RegisterAssemblyTypes(typeof(CreateEmployeeCompanyCommand).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
+            builder.RegisterAssemblyTypes(typeof(UpdateEmployeeCompanyCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             builder.Register<ServiceFactory>(context => {

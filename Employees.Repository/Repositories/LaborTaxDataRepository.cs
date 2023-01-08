@@ -3,6 +3,8 @@ using Employees.Domain.Aggregates.LaborTaxDataAggregate;
 using Employees.Domain.Exceptions;
 using System.Data.SqlClient;
 using System.Data;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace Employees.Repository.Repositories
 {
@@ -46,6 +48,14 @@ namespace Employees.Repository.Repositories
                     throw new EmployeesBaseException(ex.Message);
                 }
             }
+        }
+
+        public async Task<int> RegisterAsyncJson(IEnumerable<LaborTaxData> laborTaxData, SqlConnection connection, SqlTransaction transaction)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@jsonData", JsonConvert.SerializeObject(laborTaxData, new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-dd" }), DbType.String);
+
+            return await connection.ExecuteAsync("@EMPLOYEES.LABOR_TAX_DATA_insert_update_json", parameters, transaction, commandType: CommandType.StoredProcedure);
         }
     }
 }

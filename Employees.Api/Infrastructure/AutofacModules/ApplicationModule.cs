@@ -8,6 +8,7 @@ using Employees.Domain.Aggregates.CompanyUsersAggregate;
 using Employees.Domain.Aggregates.CompensationPaymentAggregate;
 using Employees.Domain.Aggregates.ContractAggregate;
 using Employees.Domain.Aggregates.EmployeeAggregate;
+using Employees.Domain.Aggregates.EmployeeCompanyAggregate;
 using Employees.Domain.Aggregates.HealthBenefitsAggregate;
 using Employees.Domain.Aggregates.IncomeDiscountAggregate;
 using Employees.Domain.Aggregates.LaborDataAggregate;
@@ -133,6 +134,10 @@ namespace Employees.Api.Infrastructure.AutofacModules
                            .As<ISunatRemunerationDataMapper>()
                            .InstancePerLifetimeScope();
 
+            builder.Register(c => new EmployeeCompanyMapper())
+                           .As<IEmployeeCompanyMapper>()
+                           .InstancePerLifetimeScope();
+
             #endregion
 
             #region Query
@@ -215,6 +220,10 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.RegisterType<SunatRemunerationDataQuery>()
                            .As<ISunatRemunerationDataQuery>()
+                           .InstancePerLifetimeScope();
+
+            builder.RegisterType<EmployeeCompanyQuery>()
+                           .As<IEmployeeCompanyQuery>()
                            .InstancePerLifetimeScope();
 
             #endregion
@@ -304,6 +313,10 @@ namespace Employees.Api.Infrastructure.AutofacModules
 
             builder.Register(c => new SunatRemunerationDataRepository(_defaultConnection))
                .As<ISunatRemunerationDataRepository>()
+               .InstancePerLifetimeScope();
+
+            builder.Register(c => new EmployeeCompanyRepository(_defaultConnection))
+               .As<IEmployeeCompanyRepository>()
                .InstancePerLifetimeScope();
 
             #endregion

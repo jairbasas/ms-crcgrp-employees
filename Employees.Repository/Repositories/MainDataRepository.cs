@@ -40,45 +40,6 @@ namespace Employees.Repository.Repositories
             }
         }
 
-        public async Task<int> RegisterAsync(MainData mainData)
-        {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        var parameters = new DynamicParameters();
-
-                        parameters = GetParameters(mainData);
-
-                        await connection.ExecuteAsync(@"EMPLOYEES.MAIN_DATA_insert_update", parameters, commandType: CommandType.StoredProcedure);        
-                        mainData.employeeId = parameters.Get<int>("@poi_employee_id");
-
-                        if (mainData.contracts != null)
-                        {
-                            mainData.contracts.employeeId = mainData.employeeId;
-                            await new ContractRepository(_connectionString).RegisterAsync(mainData.contracts, connection, transaction);
-                        }
-
-                        if (mainData.workingPeriod != null)
-                        {
-                            mainData.workingPeriod.employeeId = mainData.employeeId;
-                            await new WorkingPeriodRepository(_connectionString).RegisterAsync(mainData.workingPeriod, connection, transaction);
-                        }
-
-                        return mainData.employeeId;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        throw new EmployeesBaseException(ex.Message);
-                    }
-                }
-            }
-        }
-
         #region Methods
 
         private DynamicParameters GetParameters(MainData mainData) 

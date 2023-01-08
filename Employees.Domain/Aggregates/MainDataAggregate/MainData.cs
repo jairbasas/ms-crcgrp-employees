@@ -39,8 +39,7 @@ namespace Employees.Domain.Aggregates.MainDataAggregate
         public int? updateUserId { get; set; }
         public string updateUserFullname { get; set; }
         public DateTime? updateDatetime { get; set; }
-        public Contracts contracts { get; set; }
-        public WorkingPeriod workingPeriod { get; set; }
+        
 
         public MainData()
         {

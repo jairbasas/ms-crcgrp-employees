@@ -36,7 +36,8 @@ namespace Employees.Application.Queries.Implementations
         {
             var parameters = new Dictionary<string, object>
             {
-                {"employee_id", request.employeeId}
+                {"employee_id", request.employeeId ?? 0},
+                {"code", request.code ?? string.Empty}
             };
 
             var result = await _iGenericQuery.Search(@"EMPLOYEES.EMPLOYEE_search", ConvertTo.Xml(parameters), request.pagination);
@@ -50,7 +51,7 @@ namespace Employees.Application.Queries.Implementations
         {
             var parameters = new Dictionary<string, object>
             {
-                {"employee_id", request.employeeId}
+                {"employee_id", request.employeeId ?? 0}
             };
 
             var result = await _iGenericQuery.FindAll(@"EMPLOYEES.EMPLOYEE_find_all", ConvertTo.Xml(parameters), request.pagination);
