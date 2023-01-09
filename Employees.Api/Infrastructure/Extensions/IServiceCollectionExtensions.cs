@@ -32,16 +32,10 @@ namespace Employees.Api.Infrastructure.Extensions
             .SetCompatibilityVersion(CompatibilityVersion.Latest)
             .Services;
 
-        public static IServiceCollection AddCorsCustom(this IServiceCollection services) =>
-            services.AddCors(option =>
-            {
-                option.AddDefaultPolicy(builder =>
-                {
-                    builder.WithOrigins("")
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
-                });
-            });
+        public static IServiceCollection AddConfigureCors(this IServiceCollection services) =>
+            services.AddCors(p => p.AddPolicy("corsApp", builder => {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
 
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration) =>
 

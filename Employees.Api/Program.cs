@@ -22,7 +22,8 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddHttpClient<ISecurityService, SecurityService>(s => s.BaseAddress = new Uri(builder.Configuration["MsSecurity"])).AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
-    //builder.Services.AddControllers();
+    builder.Services.AddConfigureCors();
+    builder.Services.AddControllers();
 }
 
 builder.Services.AddApplicationLayer();
@@ -41,8 +42,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerDoc(builder.Configuration);
 }
 
+app.UseCors("corsApp");
 app.UseAuthentication();
-app.UseCors();
 app.UseAuthorization();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.MapControllers();
